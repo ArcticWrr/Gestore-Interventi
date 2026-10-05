@@ -1,0 +1,26 @@
+button {
+  margin-top: 12px;
+  margin-right: 8px;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 6px;
+  background: #2457a7;
+  color: white;
+  font: inherit;
+  cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+  background: #19417e;
+}
+
+button:disabled {
+  background: #e2e6ec;
+  color: #586273;
+  cursor: not-allowed;
+}
+
+button:focus-visible {
+  outline: 3px solid #2457a7;
+  outline-offset: 3px;
+}

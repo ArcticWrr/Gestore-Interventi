@@ -1,0 +1,23 @@
+<h2>{{ intervento().cliente }}</h2>
+<p>{{ intervento().descrizione }}</p>
+<p>Stato: <strong>{{ intervento().stato }}</strong></p>
+<p>Tecnico: {{ intervento().tecnico }}</p>
+
+<button
+  type="button"
+  (click)="completa.emit(intervento().id)"
+  [disabled]="intervento().stato === 'Completato'"
+>
+  Completa intervento
+</button>
+
+<button
+    type="button"
+    (click)="elimina.emit(intervento().id)"
+  >
+    Elimina intervento
+  </button>
+
+  <button type="button" (click)="modifica.emit(intervento().id)">
+  Modifica
+  </button>
