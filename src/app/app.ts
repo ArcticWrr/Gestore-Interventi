@@ -19,19 +19,22 @@ export class App {
   nuovoTecnico = '';
   errore = '';
   filtroStato = signal('Tutti'); //signal contiene un valore e permette ad Angular di sapere quando cambia
-  idInModifica: number | null = null; 
+  idInModifica: string | null = null;
  
   private interventiService = inject(InterventiService);
+  caricamento = this.interventiService.caricamento;
+  erroreCaricamento = this.interventiService.erroreCaricamento;
+  salvataggio = this.interventiService.salvataggio;
 
   get interventi(): Intervento[] {
     return this.interventiService.caricaInterventi();
   }
   
-completaIntervento(id: number) {
+completaIntervento(id: string) {
   this.interventiService.completa(id);
 }
 
-eliminaIntervento(id: number) {
+eliminaIntervento(id: string) {
   this.interventiService.elimina(id);
 
   if (this.idInModifica === id) {
@@ -41,7 +44,7 @@ eliminaIntervento(id: number) {
 /*Il servizio elimina il dato. Il componente decide se svuotare
  il modulo, perché è un comportamento dell’interfaccia*/
 
-  modificaIntervento(id: number) {
+  modificaIntervento(id: string) {
   const intervento = this.interventi.find(
     elemento => elemento.id === id
   );

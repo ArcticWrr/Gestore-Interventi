@@ -4,6 +4,7 @@
   type="text"
   [ngModel]="cliente()"
   (ngModelChange)="cliente.set($event)"
+  [disabled]="salvataggio()"
 >
 
 <label for="form-descrizione">Descrizione</label>
@@ -12,6 +13,7 @@
   type="text"
   [ngModel]="descrizione()"
   (ngModelChange)="descrizione.set($event)"
+  [disabled]="salvataggio()"
 >
 
 <label for="form-tecnico">Tecnico</label>
@@ -20,14 +22,22 @@
   type="text"
   [ngModel]="tecnico()"
   (ngModelChange)="tecnico.set($event)"
+  [disabled]="salvataggio()"
 >
 
-<button type="button" (click)="salva.emit()">
-  {{ inModifica() ? 'Salva modifiche' : 'Aggiungi intervento' }}
+<button type="button" [disabled]="salvataggio()" (click)="salva.emit()">
+  @if (salvataggio()) {
+    Salvataggio...
+  } @else {
+    {{ inModifica()
+      ? 'Salva modifiche'
+      : 'Aggiungi intervento'
+    }}
+  }
 </button>
 
 @if (inModifica()) {
-  <button type="button" (click)="annulla.emit()">
+  <button type="button" [disabled]="salvataggio()" (click)="annulla.emit()">
     Annulla
   </button>
 }

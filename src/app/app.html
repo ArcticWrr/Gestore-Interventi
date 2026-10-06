@@ -7,25 +7,40 @@
   [(tecnico)]="nuovoTecnico"
   [inModifica]="idInModifica !== null"
   [errore]="errore"
+  [salvataggio]="salvataggio()"
   (salva)="salvaIntervento()"
   (annulla)="annullaModifica()"
 />
-
+<!-- []= padre->figlio, ()= figlio->padre [()]=entrambi -->
 <app-intervento-filtro-stato
   [(filtroStato)]="filtroStato"
   [visualizzati]="interventiFiltrati().length"
   [totale]="interventi.length"
 />
 
-
-@for (intervento of interventiFiltrati(); track intervento.id) {
-  <article>
-    <app-intervento-card
-    [intervento]="intervento"
-    (completa)="completaIntervento($event)"
-    (modifica)="modificaIntervento($event)"
-    (elimina)="eliminaIntervento($event)"
-    />
+@if (caricamento()) {
+  <p>Caricamento interventi...</p>
+} @else if (erroreCaricamento()) {
+  <p role="alert">
+    {{ erroreCaricamento() }}
+  </p>
+} @else {
+  @for (intervento of interventiFiltrati(); track intervento.id) {
+    <article>
+      <app-intervento-card
+      [intervento]="intervento"
+      (completa)="completaIntervento($event)"
+      (modifica)="modificaIntervento($event)"
+      (elimina)="eliminaIntervento($event)"
+      />
+      @if (intervento.stato === 'Completato') {
+      <p>✅ Intervento completato.</p>
+    }
+  </article>
+  } @empty {
+    <p>Nessun intervento da visualizzare con questo filtro..</p>
+  }
+}
 
 <!-- A sinistra, [intervento] è il nome dell’input dichiarato nel figlio
  A destra, "intervento" è l’oggetto corrente del ciclo @for nel padre-->
@@ -36,14 +51,6 @@
 
 <!--$event contiene il valore inviato dal figlio,
  quindi in questo caso l’ID numerico-->
-
-    @if (intervento.stato === 'Completato') {
-      <p>✅ Intervento completato.</p>
-    }
-  </article>
-} @empty {
-  <p>Nessun intervento da visualizzare con questo filtro..</p>
-}
 
 <!--{{ cliente }} significa: mostra qui il valore della proprietà cliente
   definita in app.ts. Lo stesso vale per le altre due proprietà.-->

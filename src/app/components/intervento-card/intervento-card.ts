@@ -9,9 +9,9 @@ import type { Intervento } from '../../models/intervento';
 })
 export class InterventoCard {
   intervento = input.required<Intervento>(); //input signal
-  completa = output<number>();
-  modifica = output<number>();
-  elimina = output<number>();
+  completa = output<string>();
+  modifica = output<string>();
+  elimina = output<string>();
 }
 
 

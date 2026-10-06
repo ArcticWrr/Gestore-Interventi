@@ -14,6 +14,7 @@ export class InterventoForm {
 
   inModifica = input(false);
   errore = input('');
+  salvataggio = input(false);
 
   salva = output<void>();
   annulla = output<void>();

@@ -1,0 +1,33 @@
+{
+  "interventi": [
+    {
+      "id": "1",
+      "cliente": "Rossi Srl",
+      "descrizione": "Configurazione del gestionale",
+      "stato": "Da svolgere",
+      "tecnico": "Mario Rossi"
+    },
+    {
+      "id": "2",
+      "cliente": "Bianchi Spa",
+      "descrizione": "Aggiornamento del CRM",
+      "stato": "Da svolgere",
+      "tecnico": "Laura Verdi"
+    },
+    {
+      "cliente": "xx",
+      "descrizione": "cc",
+      "stato": "Da svolgere",
+      "tecnico": "xxzxzx",
+      "id": "hAG1tjCXgCo"
+    },
+    {
+      "cliente": "dsd",
+      "descrizione": "ffff",
+      "stato": "Da svolgere",
+      "tecnico": "zzzzz",
+      "id": "IWW9qfV7jV0"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

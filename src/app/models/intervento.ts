@@ -1,5 +1,5 @@
 export interface Intervento {
-  id: number;
+  id: string;
   cliente: string;
   descrizione: string;
   stato: 'Da svolgere' | 'Completato';
