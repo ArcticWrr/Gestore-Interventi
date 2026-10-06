@@ -68,50 +68,67 @@ annullaModifica() {
   this.errore = '';
 }
 
-salvaIntervento() {
-  const cliente = this.nuovoCliente.trim();
-  const descrizione = this.nuovoDescrizione.trim();
-  const tecnico = this.nuovoTecnico.trim();
+  salvaIntervento() {
+    const cliente = this.nuovoCliente.trim();
+    const descrizione = this.nuovoDescrizione.trim();
+    const tecnico = this.nuovoTecnico.trim();
 
-  if (!cliente || !descrizione || !tecnico) {
-    this.errore = 'Compila cliente, descrizione e tecnico.';
-    return;
-  }
-
-  if (this.idInModifica !== null) { //modifica di un intervento esistente
-    const aggiornato = this.interventiService.aggiorna(
-      this.idInModifica,
-      cliente,
-      descrizione,
-      tecnico
-    );
-
-    if (!aggiornato) {
-      this.errore = 'Intervento non trovato.';
+    if (!cliente || !descrizione || !tecnico) {
+      this.errore = 'Compila cliente, descrizione e tecnico.';
       return;
     }
-  } else {
-    this.interventiService.aggiungi(
-      cliente,
-      descrizione,
-      tecnico
+
+    this.errore = '';
+
+    if (this.idInModifica !== null) {
+      this.interventiService
+        .aggiorna(
+          this.idInModifica,
+          cliente,
+          descrizione,
+          tecnico
+        )
+        .subscribe({
+          next: () => {
+            this.annullaModifica();
+          },
+          error: errore => {
+            console.error(errore);
+            this.errore = 'Impossibile salvare le modifiche.';
+          }
+        });
+
+      return;
+    }
+/*Abbiamo spostato .subscribe() e i suoi blocchi next/error in App perché è App che gestisce il modulo
+e deve decidere cosa fare dopo la risposta del server.
+App poteva solo avviare l’operazione ma non sapeva quando fosse terminata. Per questo svuotava subito il modulo,
+anche se il server poteva fallire.
+Ora il servizio restituisce l’Observable e App si iscrive*/
+    this.interventiService
+      .aggiungi(cliente, descrizione, tecnico)
+      .subscribe({
+        next: () => {
+          this.annullaModifica();
+        },
+        error: errore => {
+          console.error(errore);
+          this.errore = 'Impossibile aggiungere l’intervento.';
+        }
+      });
+  }
+
+  interventiFiltrati = computed(() => {
+    const filtro = this.filtroStato();
+
+    if (filtro === 'Tutti') {
+      return this.interventi;
+    }
+
+    return this.interventi.filter(
+      intervento => intervento.stato === filtro
     );
-  }
-
-  this.annullaModifica();
-}
-
-interventiFiltrati = computed(() => {
-  const filtro = this.filtroStato();
-
-  if (filtro === 'Tutti') {
-    return this.interventi;
-  }
-
-  return this.interventi.filter(
-    intervento => intervento.stato === filtro
-  );
-});
+  });
 
 }
 /* Questo file contiene i dati del componente e la sua configurazione:

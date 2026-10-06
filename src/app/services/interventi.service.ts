@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import type { Intervento } from '../models/intervento';
-import { finalize, tap, delay } from 'rxjs';
+import { finalize, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -92,48 +92,46 @@ export class InterventiService {
       descrizione,
       stato: 'Da svolgere',
       tecnico
-    };//oggetto con tutte proprietà di intervento tranne id, che viene generato automaticamente
-    
+    }; // oggetto con tutte le proprietà di Intervento tranne id
+
     this.salvataggio.set(true);
-    this.http
+    return this.http
       .post<Intervento>(this.apiUrl, nuovoIntervento)
-      //.pipe(delay(2000))
-      .subscribe({
-        next: interventoCreato => {
+      .pipe(
+        tap(interventoCreato => {
           this.interventi.update(elenco => [
             ...elenco,
             interventoCreato
           ]);
+        }),
+        finalize(() => {
           this.salvataggio.set(false);
-        },
-        error: errore => {
-          console.error(
-            'Errore durante la creazione:',
-            errore
-          );
-          this.salvataggio.set(false);
-        }
-      });
-  } 
+        })
+      );
+  }
+  /*Prima il servizio eseguiva direttamente subscribe,
+  di conseguenza, App non poteva sapere quando la richiesta
+  fosse realmente terminata.
+  La nuova versione restituisce la richiesta: return consegna
+  l’Observable ad App. La richiesta verrà controllata dal componente padre
+  Quando il server restituisce l’intervento:
+1. tap riceve interventoCreato;
+2. il servizio lo aggiunge al signal;
+3. Angular aggiorna l’elenco
+finalize viene eseguito quando la richiesta termina, sia in caso di successo che di errore. In questo caso, finalize serve a disattivare il segnale salvataggio, che indica al componente padre che la richiesta è terminata.
+  */
 
-  aggiorna(id: string, cliente: string, descrizione: string, tecnico: string): boolean {
-    const trovato = this.interventi().find(
-      intervento => intervento.id === id
-    );
-    if (!trovato) {
-      return false;
-    }
-
+  aggiorna(id: string, cliente: string, descrizione: string, tecnico: string) {
     const url = `${this.apiUrl}/${id}`;
     this.salvataggio.set(true);
-    this.http
+    return this.http
       .patch<Intervento>(url, {
         cliente,
         descrizione,
         tecnico
       })
-      .subscribe({
-        next: interventoAggiornato => {
+      .pipe(
+        tap(interventoAggiornato => {
           this.interventi.update(elenco =>
             elenco.map(intervento =>
               intervento.id === id
@@ -141,17 +139,11 @@ export class InterventiService {
                 : intervento
             )
           );
+        }),
+        finalize(() => {
           this.salvataggio.set(false);
-        },
-        error: errore => {
-          console.error(
-            'Errore durante l\'aggiornamento:',
-            errore
-          );
-          this.salvataggio.set(false);
-        }
-      });
-    return true;
+        })
+      );
   }
 }
 /*update modifica il valore contenuto in un signal usando il suo valore attuale.
