@@ -1,0 +1,37 @@
+<label for="form-cliente">Nome del cliente</label>
+<input
+  id="form-cliente"
+  type="text"
+  [ngModel]="cliente()"
+  (ngModelChange)="cliente.set($event)"
+>
+
+<label for="form-descrizione">Descrizione</label>
+<input
+  id="form-descrizione"
+  type="text"
+  [ngModel]="descrizione()"
+  (ngModelChange)="descrizione.set($event)"
+>
+
+<label for="form-tecnico">Tecnico</label>
+<input
+  id="form-tecnico"
+  type="text"
+  [ngModel]="tecnico()"
+  (ngModelChange)="tecnico.set($event)"
+>
+
+<button type="button" (click)="salva.emit()">
+  {{ inModifica() ? 'Salva modifiche' : 'Aggiungi intervento' }}
+</button>
+
+@if (inModifica()) {
+  <button type="button" (click)="annulla.emit()">
+    Annulla
+  </button>
+}
+
+@if (errore()) {
+  <p role="alert">{{ errore() }}</p>
+}

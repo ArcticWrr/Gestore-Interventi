@@ -1,0 +1,28 @@
+:host {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+label {
+  margin-left: 8px;
+}
+
+label:first-of-type {
+  margin-left: 0;
+}
+
+input {
+  height: 28px;
+  box-sizing: border-box;
+}
+
+button {
+  height: 28px;
+  margin-left: 6px;
+}
+
+p[role="alert"] {
+  flex-basis: 100%;
+}

@@ -1,12 +1,13 @@
-import { Component, inject, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component,  computed, inject, signal } from '@angular/core';
 import type { Intervento } from './models/intervento';
 import { InterventoCard } from './components/intervento-card/intervento-card';
 import { InterventiService } from './services/interventi.service';
+import { InterventoForm } from './components/intervento-form/intervento-form';
+import { InterventoFiltro } from './components/intervento-filtro-stato/intervento-filtro-stato';
 
 @Component({
   selector: 'app-root',
-  imports: [FormsModule, InterventoCard], /*FormsModule rende disponibile ngModel, che useremo per collegare un campo HTML a una proprietà del componente*/
+  imports: [InterventoCard, InterventoForm, InterventoFiltro],
   templateUrl: './app.html',
   styleUrls: ['./app.css'],
 })
@@ -19,7 +20,7 @@ export class App {
   errore = '';
   filtroStato = signal('Tutti'); //signal contiene un valore e permette ad Angular di sapere quando cambia
   idInModifica: number | null = null; 
-
+ 
   private interventiService = inject(InterventiService);
 
   get interventi(): Intervento[] {
@@ -97,15 +98,17 @@ salvaIntervento() {
   this.annullaModifica();
 }
 
-interventiFiltrati() {
-  if (this.filtroStato() === 'Tutti') {
+interventiFiltrati = computed(() => {
+  const filtro = this.filtroStato();
+
+  if (filtro === 'Tutti') {
     return this.interventi;
   }
 
   return this.interventi.filter(
-    intervento => intervento.stato === this.filtroStato()
+    intervento => intervento.stato === filtro
   );
-}
+});
 
 }
 /* Questo file contiene i dati del componente e la sua configurazione:

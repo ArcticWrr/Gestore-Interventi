@@ -1,0 +1,15 @@
+<label for="filtro-stato">Filtra per stato</label>
+<select
+  id="filtro-stato"
+  [ngModel]="filtroStato()"
+  (ngModelChange)="filtroStato.set($event)"
+>
+  <option value="Tutti">Tutti</option>
+  <option value="Da svolgere">Da svolgere</option>
+  <option value="Completato">Completati</option>
+</select>
+
+<p>
+  Visualizzati: {{ visualizzati() }}
+  su {{ totale() }}
+</p>
