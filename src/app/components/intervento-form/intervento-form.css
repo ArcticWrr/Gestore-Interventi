@@ -16,7 +16,8 @@ textarea {
   width: 100%;
   padding: 10px;
   border: 1px solid #8793a3;
-  border-radius: 6px;
+  border-radius: 10px;
+  background: #fbfdff;
   font: inherit;
 }
 
@@ -33,14 +34,16 @@ button:focus-visible {
 }
 
 button {
+  min-height: 46px;
   margin-top: 16px;
   margin-right: 8px;
   padding: 10px 14px;
   border: none;
-  border-radius: 6px;
+  border-radius: 10px;
   background: #2457a7;
   color: white;
   font: inherit;
+  font-weight: 700;
   cursor: pointer;
 }
 

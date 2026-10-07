@@ -1,6 +1,16 @@
 <h2>{{ intervento().cliente }}</h2>
 <p>{{ intervento().descrizione }}</p>
-<p>Stato: <strong>{{ intervento().stato }}</strong></p>
+<p>
+  Stato:
+  <strong
+    class="stato"
+    [class.stato-da-svolgere]="intervento().stato === 'Da svolgere'"
+    [class.stato-in-corso]="intervento().stato === 'In corso'"
+    [class.stato-completato]="intervento().stato === 'Completato'"
+  >
+    {{ intervento().stato }}
+  </strong>
+</p>
 <p>Tecnico: {{ intervento().tecnico }}</p>
 <p>Data intervento: {{ intervento().dataIntervento }}</p>
 <p>Note: {{ intervento().note }}</p>

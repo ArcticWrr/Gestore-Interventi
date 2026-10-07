@@ -1,27 +1,94 @@
-a {
+:host {
+  display: block;
+}
+
+h2 {
+  margin: 0 0 12px;
+  color: #10234a;
+  font-size: 1.45rem;
+}
+
+p {
+  margin: 8px 0;
+  color: #46556f;
+  line-height: 1.55;
+}
+
+.stato {
   display: inline-block;
-  margin-top: 12px;
-  padding: 10px 14px;
-  border-radius: 6px;
+  margin-left: 4px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+}
+
+.stato-da-svolgere {
+  background: #fff1c7;
+  color: #7a4d00;
+}
+
+.stato-in-corso {
+  background: #dce9ff;
+  color: #17478f;
+}
+
+.stato-completato {
+  background: #d9f5e7;
+  color: #12613e;
+}
+
+button,
+a {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 18px;
+  margin-right: 10px;
+  padding: 13px 20px;
+  border: 1px solid transparent;
+  border-radius: 10px;
   background: #2457a7;
   color: white;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1;
   text-decoration: none;
-  font: inherit;
+  cursor: pointer;
+  transition: background 150ms ease, transform 150ms ease;
 }
 
+button:hover:not(:disabled),
 a:hover {
-  background: #19417e;
+  background: #183f7a;
+  transform: translateY(-1px);
 }
 
+button:nth-of-type(2) {
+  border-color: #cbd5e1;
+  background: white;
+  color: #243247;
+}
+
+button:nth-of-type(2):hover:not(:disabled) {
+  background: #edf2f8;
+}
+
+button:focus-visible,
 a:focus-visible {
-  outline: 3px solid #2457a7;
+  outline: 3px solid #76a9fa;
   outline-offset: 3px;
+}
+
+button:disabled {
+  background: #e2e6ec;
+  color: #586273;
+  cursor: not-allowed;
 }
 
 @media (max-width: 600px) {
   button,
   a {
-    box-sizing: border-box;
     width: 100%;
     margin-right: 0;
     text-align: center;

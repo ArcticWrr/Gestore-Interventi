@@ -1,17 +1,17 @@
 :host {
   display: block;
-  max-width: 800px;
+  max-width: 760px;
   margin: 0 auto;
   padding: 24px;
-  font-family: Arial, sans-serif;
   color: #243247;
 }
 
 section {
   padding: 24px;
   border: 1px solid #d5dce5;
-  border-radius: 10px;
-  background: #f7f9fc;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 16px 40px rgba(36, 62, 105, 0.1);
 }
 
 h2 {
@@ -25,10 +25,12 @@ p {
 a {
   display: inline-block;
   padding: 10px 14px;
-  border-radius: 6px;
+  min-height: 46px;
+  border-radius: 10px;
   background: #2457a7;
   color: white;
   text-decoration: none;
+  font-weight: 700;
 }
 
 a:hover {
