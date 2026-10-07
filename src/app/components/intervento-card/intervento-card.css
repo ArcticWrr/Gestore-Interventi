@@ -1,26 +1,29 @@
-button {
+a {
+  display: inline-block;
   margin-top: 12px;
-  margin-right: 8px;
   padding: 10px 14px;
-  border: none;
   border-radius: 6px;
   background: #2457a7;
   color: white;
+  text-decoration: none;
   font: inherit;
-  cursor: pointer;
 }
 
-button:hover:not(:disabled) {
+a:hover {
   background: #19417e;
 }
 
-button:disabled {
-  background: #e2e6ec;
-  color: #586273;
-  cursor: not-allowed;
-}
-
-button:focus-visible {
+a:focus-visible {
   outline: 3px solid #2457a7;
   outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+  button,
+  a {
+    box-sizing: border-box;
+    width: 100%;
+    margin-right: 0;
+    text-align: center;
+  }
 }

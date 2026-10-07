@@ -1,28 +1,62 @@
 :host {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  flex-wrap: wrap;
+  display: block;
+  margin-bottom: 24px;
 }
 
 label {
-  margin-left: 8px;
+  display: block;
+  margin-top: 16px;
+  margin-bottom: 6px;
+  font-weight: bold;
 }
 
-label:first-of-type {
-  margin-left: 0;
-}
-
-input {
-  height: 28px;
+input,
+textarea {
   box-sizing: border-box;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #8793a3;
+  border-radius: 6px;
+  font: inherit;
+}
+
+textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+input:focus-visible,
+textarea:focus-visible,
+button:focus-visible {
+  outline: 3px solid #2457a7;
+  outline-offset: 3px;
 }
 
 button {
-  height: 28px;
-  margin-left: 6px;
+  margin-top: 16px;
+  margin-right: 8px;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 6px;
+  background: #2457a7;
+  color: white;
+  font: inherit;
+  cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+  background: #19417e;
+}
+
+button:disabled {
+  background: #e2e6ec;
+  color: #586273;
+  cursor: not-allowed;
 }
 
 p[role="alert"] {
-  flex-basis: 100%;
+  padding: 12px;
+  border-left: 4px solid #b42318;
+  background: #fff0ee;
+  color: #8a1c13;
 }

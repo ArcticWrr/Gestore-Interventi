@@ -1,0 +1,35 @@
+:host {
+  display: block;
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid #d5dce5;
+}
+
+label {
+  display: block;
+  margin-top: 16px;
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+
+input,
+select {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #8793a3;
+  border-radius: 6px;
+  background: white;
+  font: inherit;
+}
+
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid #2457a7;
+  outline-offset: 3px;
+}
+
+p {
+  margin-top: 16px;
+  color: #586273;
+}
