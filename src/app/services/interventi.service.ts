@@ -13,6 +13,7 @@ export class InterventiService {
   readonly caricamento = signal(true);
   readonly erroreCaricamento = signal('');  
   readonly salvataggio = signal(false);
+  readonly erroreOperazione = signal('');
 
   constructor() {
     this.caricaDaApi();
@@ -41,31 +42,36 @@ export class InterventiService {
   }
 
   completa(id: string) {
-  const url = `${this.apiUrl}/${id}`;
-  this.http
-    .patch<Intervento>(url, { //PATCH comunica al server di modificare soltanto lo stato
-      stato: 'Completato'
-    }) //JSON Server aggiorna db.json e restituisce l’intervento completo
-    .subscribe({
-      next: interventoAggiornato => {
-        this.interventi.update(elenco =>
-          elenco.map(intervento =>
-            intervento.id === id
-              ? interventoAggiornato
-              : intervento
-          )
-        );
-      },
-      error: errore => {
-        console.error(
-          'Errore durante il completamento:',
-          errore
-        );
-      }
-    });
+    this.erroreOperazione.set('');
+    const url = `${this.apiUrl}/${id}`;
+    this.http
+      .patch<Intervento>(url, { //PATCH comunica al server di modificare soltanto lo stato
+        stato: 'Completato'
+      }) //JSON Server aggiorna db.json e restituisce l’intervento completo
+      .subscribe({
+        next: interventoAggiornato => {
+          this.interventi.update(elenco =>
+            elenco.map(intervento =>
+              intervento.id === id
+                ? interventoAggiornato
+                : intervento
+            )
+          );
+        },
+        error: errore => {
+          console.error(
+            'Errore durante il completamento:',
+            errore
+          );
+          this.erroreOperazione.set(
+            'Impossibile completare l’intervento.'
+          );
+        }
+      });
   }
 
   elimina(id: string) {
+    this.erroreOperazione.set('');
     const url = `${this.apiUrl}/${id}`;
     this.http
       .delete<void>(url)
@@ -81,6 +87,9 @@ export class InterventiService {
           console.error(
             'Errore durante l’eliminazione:',
             errore
+          );
+          this.erroreOperazione.set(
+            'Impossibile eliminare l’intervento.'
           );
         }
       });

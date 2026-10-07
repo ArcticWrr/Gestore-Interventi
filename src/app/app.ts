@@ -25,6 +25,7 @@ export class App {
   caricamento = this.interventiService.caricamento;
   erroreCaricamento = this.interventiService.erroreCaricamento;
   salvataggio = this.interventiService.salvataggio;
+  erroreOperazione = this.interventiService.erroreOperazione;
 
   get interventi(): Intervento[] {
     return this.interventiService.caricaInterventi();

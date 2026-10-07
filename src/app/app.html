@@ -17,6 +17,11 @@
   [visualizzati]="interventiFiltrati().length"
   [totale]="interventi.length"
 />
+@if (erroreOperazione()) {
+  <p role="alert">
+    {{ erroreOperazione() }}
+  </p>
+}
 
 @if (caricamento()) {
   <p>Caricamento interventi...</p>
