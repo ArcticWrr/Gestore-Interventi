@@ -2,9 +2,12 @@
 <p>Totale: {{ interventi.length }}</p>
 
 <app-intervento-form 
-[(cliente)]="nuovoCliente"
+  [(cliente)]="nuovoCliente"
   [(descrizione)]="nuovoDescrizione"
   [(tecnico)]="nuovoTecnico"
+  [(dataIntervento)]="nuovaDataIntervento"
+  [(note)]="nuoveNote"
+
   [inModifica]="idInModifica !== null"
   [errore]="errore"
   [salvataggio]="salvataggio()"

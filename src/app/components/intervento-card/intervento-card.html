@@ -2,6 +2,8 @@
 <p>{{ intervento().descrizione }}</p>
 <p>Stato: <strong>{{ intervento().stato }}</strong></p>
 <p>Tecnico: {{ intervento().tecnico }}</p>
+<p>Data intervento: {{ intervento().dataIntervento }}</p>
+<p>Note: {{ intervento().note }}</p>
 
 @if (intervento().stato === 'Da svolgere') {
   <button

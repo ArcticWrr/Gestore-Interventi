@@ -24,6 +24,24 @@
   (ngModelChange)="tecnico.set($event)"
   [disabled]="salvataggio()"
 >
+@if (!inModifica()) {
+  <label for="form-data-intervento">Data intervento</label>
+  <input
+    id="form-data-intervento"
+    type="date"
+    [ngModel]="dataIntervento()"
+    (ngModelChange)="dataIntervento.set($event)"
+    [disabled]="salvataggio()"
+  >
+}
+
+<label for="form-note">Note</label>
+<textarea
+  id="form-note"
+  [ngModel]="note()"
+  (ngModelChange)="note.set($event)"
+  [disabled]="salvataggio()" 
+></textarea>
 
 <button type="button" [disabled]="salvataggio()" (click)="salva.emit()">
   @if (salvataggio()) {

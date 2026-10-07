@@ -126,12 +126,14 @@ export class InterventiService {
       });
   }
 
-  aggiungi(cliente: string, descrizione: string, tecnico: string) {
+  aggiungi(cliente: string, descrizione: string, tecnico: string, dataIntervento: string, note: string) {
     const nuovoIntervento: Omit<Intervento, 'id'> = {
       cliente,
       descrizione,
       stato: 'Da svolgere',
-      tecnico
+      tecnico,
+      dataIntervento,
+      note
     }; // oggetto con tutte le proprietà di Intervento tranne id
 
     this.salvataggio.set(true);
@@ -165,14 +167,15 @@ Sì  → servizio restituisce Observable, App fa subscribe
 No  → il servizio può fare subscribe internamente
 */
 
-  aggiorna(id: string, cliente: string, descrizione: string, tecnico: string) {
+  aggiorna(id: string, cliente: string, descrizione: string, tecnico: string, note: string) {
     const url = `${this.apiUrl}/${id}`;
     this.salvataggio.set(true);
     return this.http
       .patch<Intervento>(url, {
         cliente,
         descrizione,
-        tecnico
+        tecnico,
+        note
       })
       .pipe(
         tap(interventoAggiornato => {

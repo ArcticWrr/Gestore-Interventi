@@ -11,6 +11,8 @@ export class InterventoForm {
   cliente = model('');
   descrizione = model('');
   tecnico = model('');
+  dataIntervento = model('');
+  note = model('');
 
   inModifica = input(false);
   errore = input('');

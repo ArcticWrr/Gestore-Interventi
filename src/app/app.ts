@@ -17,6 +17,8 @@ export class App {
   nuovoCliente = '';
   nuovoDescrizione = '';
   nuovoTecnico = '';
+  nuoveNote = '';
+  nuovaDataIntervento = '';
   errore = '';
   filtroStato = signal('Tutti'); //signal contiene un valore e permette ad Angular di sapere quando cambia
   ricercaCliente = signal('');  //Questo signal conserva il valore usato per filtrare l’elenco
@@ -38,6 +40,8 @@ export class App {
     this.nuovoDescrizione = '';
     this.nuovoTecnico = '';
     this.errore = '';
+    this.nuovaDataIntervento = '';
+    this.nuoveNote = '';
   }
 
   completaIntervento(id: string) {
@@ -65,6 +69,7 @@ export class App {
     this.nuovoCliente = intervento.cliente;
     this.nuovoDescrizione = intervento.descrizione;
     this.nuovoTecnico = intervento.tecnico;
+    this.nuoveNote = intervento.note;
     this.errore = '';
   }
 
@@ -76,22 +81,23 @@ export class App {
     const cliente = this.nuovoCliente.trim();
     const descrizione = this.nuovoDescrizione.trim();
     const tecnico = this.nuovoTecnico.trim();
+    const dataIntervento = this.nuovaDataIntervento;
+    const note = this.nuoveNote.trim();
 
-    if (!cliente || !descrizione || !tecnico) {
-      this.errore = 'Compila cliente, descrizione e tecnico.';
+    const campiBaseMancanti = (!cliente || !descrizione || !tecnico);
+    const dataMancanteInCreazione = this.idInModifica === null && !dataIntervento;
+
+    if (campiBaseMancanti || dataMancanteInCreazione) {
+      this.errore =
+        'Compila cliente, descrizione, tecnico e data.';
       return;
     }
 
     this.errore = '';
 
-    if (this.idInModifica !== null) {
+    if (this.idInModifica !== null) { // modifica un intervento esistente
       this.interventiService
-        .aggiorna(
-          this.idInModifica,
-          cliente,
-          descrizione,
-          tecnico
-        )
+        .aggiorna(this.idInModifica, cliente, descrizione, tecnico, note)
         .subscribe({
           next: () => {
             this.resetModulo();
@@ -103,19 +109,19 @@ export class App {
         });
 
       return;
-    }
-
-    this.interventiService
-      .aggiungi(cliente, descrizione, tecnico)
-      .subscribe({
-        next: () => {
-          this.resetModulo();
-        },
-        error: errore => {
-          console.error(errore);
-          this.errore = 'Impossibile aggiungere l’intervento.';
-        }
-      });
+    } else { //creo nuovo intervento
+      this.interventiService
+        .aggiungi(cliente, descrizione, tecnico, dataIntervento, note)
+        .subscribe({
+          next: () => {
+            this.resetModulo();
+          },
+          error: errore => {
+            console.error(errore);
+            this.errore = 'Impossibile aggiungere l’intervento.';
+          }
+        });
+      }
   }
   /*Abbiamo spostato .subscribe() e i suoi blocchi next/error in App perché è App che gestisce il modulo
   e deve decidere cosa fare dopo la risposta del server.
