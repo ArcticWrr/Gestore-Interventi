@@ -1,32 +1,22 @@
 {
   "interventi": [
     {
-      "id": "1",
+      "id": "esempio-1",
       "cliente": "Rossi Srl",
-      "descrizione": "Configurazione del gestionale",
+      "descrizione": "Controllo impianto",
+      "dataIntervento": "2026-10-10",
+      "note": "Intervento dimostrativo",
       "stato": "Da svolgere",
-      "tecnico": "Mario Rossi"
+      "tecnico": "Mario Bianchi"
     },
     {
-      "id": "2",
-      "cliente": "Bianchi Spa",
-      "descrizione": "Aggiornamento del CRM",
+      "id": "esempio-2",
+      "cliente": "Verdi Srl",
+      "descrizione": "Manutenzione ordinaria",
+      "dataIntervento": "2026-10-12",
+      "note": "Controllo annuale",
       "stato": "Da svolgere",
-      "tecnico": "Laura Verdi"
-    },
-    {
-      "cliente": "xx",
-      "descrizione": "cc",
-      "stato": "Da svolgere",
-      "tecnico": "xxzxzx",
-      "id": "hAG1tjCXgCo"
-    },
-    {
-      "cliente": "dsd",
-      "descrizione": "ffff",
-      "stato": "Da svolgere",
-      "tecnico": "zzzzz",
-      "id": "IWW9qfV7jV0"
+      "tecnico": "Luigi Verdi"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
