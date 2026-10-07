@@ -6,7 +6,7 @@ import { routes } from './app.routes';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideRouter(routes),
+    provideRouter(routes), //attiva router usando array routes
     provideHttpClient()
   ]
 };
