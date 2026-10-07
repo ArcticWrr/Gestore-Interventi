@@ -30,3 +30,7 @@
 <button type="button" (click)="modifica.emit(intervento().id)">
   Modifica
 </button>
+
+<a [routerLink]="['/interventi', intervento().id]">
+  Vedi dettaglio
+</a>

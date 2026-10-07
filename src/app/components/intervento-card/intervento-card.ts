@@ -1,8 +1,9 @@
 import { Component, input, output } from '@angular/core';
 import type { Intervento } from '../../models/intervento';
+import { RouterLink } from '@angular/router';
 
 @Component({
-  imports: [],
+  imports: [RouterLink],
   selector: 'app-intervento-card',
   styleUrl: './intervento-card.css',
   templateUrl: './intervento-card.html',

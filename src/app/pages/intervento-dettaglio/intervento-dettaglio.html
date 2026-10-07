@@ -1,0 +1,26 @@
+@if (caricamento()) {
+  <p>Caricamento dettaglio...</p>
+} @else if (erroreCaricamento()) {
+  <p role="alert">
+    {{ erroreCaricamento() }}
+  </p>
+} @else if (intervento(); as interventoTrovato) {
+  <section>
+    <h2>Dettaglio intervento</h2>
+
+    <p>Cliente: <strong>{{ interventoTrovato.cliente }}</strong></p>
+    <p>Descrizione: {{ interventoTrovato.descrizione }}</p>
+    <p>Tecnico: {{ interventoTrovato.tecnico }}</p>
+    <p>Data: {{ interventoTrovato.dataIntervento }}</p>
+    <p>Stato: {{ interventoTrovato.stato }}</p>
+    <p>Note: {{ interventoTrovato.note }}</p>
+  </section>
+} @else {
+  <p role="alert">
+    Nessun intervento trovato con ID {{ id() }}.
+  </p>
+}
+
+<p>
+  <a routerLink="/">Torna all’elenco</a>
+</p>

@@ -4,10 +4,11 @@ import { InterventoCard } from './components/intervento-card/intervento-card';
 import { InterventiService } from './services/interventi.service';
 import { InterventoForm } from './components/intervento-form/intervento-form';
 import { InterventoFiltro } from './components/intervento-filtro-stato/intervento-filtro-stato';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [InterventoCard, InterventoForm, InterventoFiltro],
+  imports: [InterventoCard, InterventoForm, InterventoFiltro, RouterOutlet],
   templateUrl: './app.html',
   styleUrls: ['./app.css'],
 })
