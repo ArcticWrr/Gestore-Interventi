@@ -19,6 +19,7 @@ export class App {
   nuovoTecnico = '';
   errore = '';
   filtroStato = signal('Tutti'); //signal contiene un valore e permette ad Angular di sapere quando cambia
+  ricercaCliente = signal('');  //Questo signal conserva il valore usato per filtrare l’elenco
   idInModifica: string | null = null;
  
   private interventiService = inject(InterventiService);
@@ -120,16 +121,24 @@ Ora il servizio restituisce l’Observable e App si iscrive*/
   }
 
   interventiFiltrati = computed(() => {
-    const filtro = this.filtroStato();
+  const filtro = this.filtroStato();
+  const ricerca = this.ricercaCliente()
+    .trim()
+    .toLowerCase();
 
-    if (filtro === 'Tutti') {
-      return this.interventi;
-    }
+  return this.interventi.filter(intervento => {
+    const corrispondeStato =
+      filtro === 'Tutti' ||
+      intervento.stato === filtro;
 
-    return this.interventi.filter(
-      intervento => intervento.stato === filtro
-    );
+    const corrispondeCliente =
+      intervento.cliente
+        .toLowerCase()
+        .includes(ricerca);
+
+    return corrispondeStato && corrispondeCliente;
   });
+});
 
 }
 /* Questo file contiene i dati del componente e la sua configurazione:

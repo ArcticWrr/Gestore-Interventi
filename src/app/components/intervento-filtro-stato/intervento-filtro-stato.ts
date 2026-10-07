@@ -10,6 +10,8 @@ import { FormsModule } from '@angular/forms';
 })
 export class InterventoFiltro {
   filtroStato = model<string>('Tutti');
+  ricercaCliente = model(''); //contiene tutto cio che l’utente scrive nel campo di ricerca, comunica nuovo valore a padre
+
   visualizzati = input<number>(0);
   totale = input<number>(0);
 }

@@ -1,3 +1,15 @@
+<label for="ricerca-cliente">
+  Cerca cliente
+</label>
+
+<input
+  id="ricerca-cliente"
+  type="search"
+  placeholder="Es. Rossi"
+  [ngModel]="ricercaCliente()"
+  (ngModelChange)="ricercaCliente.set($event)"
+>
+
 <label for="filtro-stato">Filtra per stato</label>
 <select
   id="filtro-stato"
