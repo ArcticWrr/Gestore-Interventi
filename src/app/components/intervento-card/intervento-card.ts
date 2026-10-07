@@ -12,6 +12,7 @@ export class InterventoCard {
   completa = output<string>();
   modifica = output<string>();
   elimina = output<string>();
+  avvia = output<string>();
 }
 
 

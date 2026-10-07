@@ -31,44 +31,46 @@ export class App {
   get interventi(): Intervento[] {
     return this.interventiService.caricaInterventi();
   }
-  
-completaIntervento(id: string) {
-  this.interventiService.completa(id);
-}
 
-eliminaIntervento(id: string) {
-  this.interventiService.elimina(id);
-
-  if (this.idInModifica === id) {
-    this.annullaModifica();
+  resetModulo() {
+    this.idInModifica = null;
+    this.nuovoCliente = '';
+    this.nuovoDescrizione = '';
+    this.nuovoTecnico = '';
+    this.errore = '';
   }
-}
-/*Il servizio elimina il dato. Il componente decide se svuotare
- il modulo, perché è un comportamento dell’interfaccia*/
+
+  completaIntervento(id: string) {
+    this.interventiService.completa(id);
+  }
+
+  eliminaIntervento(id: string) {
+    this.interventiService.elimina(id);
+
+    if (this.idInModifica === id) {
+      this.resetModulo();
+    }
+  }
+  /*Il servizio elimina il dato. Il componente decide se svuotare
+  il modulo, perché è un comportamento dell’interfaccia*/
 
   modificaIntervento(id: string) {
-  const intervento = this.interventi.find(
+    const intervento = this.interventi.find(
     elemento => elemento.id === id
-  );
-
-  if (!intervento) {
-    return;
+    );
+    if (!intervento) {
+      return;
+    }
+    this.idInModifica = id;
+    this.nuovoCliente = intervento.cliente;
+    this.nuovoDescrizione = intervento.descrizione;
+    this.nuovoTecnico = intervento.tecnico;
+    this.errore = '';
   }
 
-  this.idInModifica = id;
-  this.nuovoCliente = intervento.cliente;
-  this.nuovoDescrizione = intervento.descrizione;
-  this.nuovoTecnico = intervento.tecnico;
-  this.errore = '';
-}
-
-annullaModifica() {
-  this.idInModifica = null;
-  this.nuovoCliente = '';
-  this.nuovoDescrizione = '';
-  this.nuovoTecnico = '';
-  this.errore = '';
-}
+  avviaIntervento(id: string) {
+    this.interventiService.avvia(id);
+  }
 
   salvaIntervento() {
     const cliente = this.nuovoCliente.trim();
@@ -92,7 +94,7 @@ annullaModifica() {
         )
         .subscribe({
           next: () => {
-            this.annullaModifica();
+            this.resetModulo();
           },
           error: errore => {
             console.error(errore);
@@ -102,16 +104,12 @@ annullaModifica() {
 
       return;
     }
-/*Abbiamo spostato .subscribe() e i suoi blocchi next/error in App perché è App che gestisce il modulo
-e deve decidere cosa fare dopo la risposta del server.
-App poteva solo avviare l’operazione ma non sapeva quando fosse terminata. Per questo svuotava subito il modulo,
-anche se il server poteva fallire.
-Ora il servizio restituisce l’Observable e App si iscrive*/
+
     this.interventiService
       .aggiungi(cliente, descrizione, tecnico)
       .subscribe({
         next: () => {
-          this.annullaModifica();
+          this.resetModulo();
         },
         error: errore => {
           console.error(errore);
@@ -119,6 +117,12 @@ Ora il servizio restituisce l’Observable e App si iscrive*/
         }
       });
   }
+  /*Abbiamo spostato .subscribe() e i suoi blocchi next/error in App perché è App che gestisce il modulo
+  e deve decidere cosa fare dopo la risposta del server.
+  App poteva solo avviare l’operazione ma non sapeva quando fosse terminata. Per questo svuotava subito il modulo,
+  anche se il server poteva fallire.
+  Ora il servizio restituisce l’Observable e App si iscrive*/
+
 
   interventiFiltrati = computed(() => {
   const filtro = this.filtroStato();
@@ -138,7 +142,7 @@ Ora il servizio restituisce l’Observable e App si iscrive*/
 
     return corrispondeStato && corrispondeCliente;
   });
-});
+  });
 
 }
 /* Questo file contiene i dati del componente e la sua configurazione:

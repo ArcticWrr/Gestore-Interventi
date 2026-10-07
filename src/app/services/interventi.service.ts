@@ -95,6 +95,37 @@ export class InterventiService {
       });
   }
 
+  avvia(id: string) {
+    this.erroreOperazione.set('');
+    const url = `${this.apiUrl}/${id}`;
+
+    this.http
+      .patch<Intervento>(url, {
+        stato: 'In corso'
+      })
+      .subscribe({ //subscribe() avvia l’Observable HTTP e stabilisce cosa fare quando arriva una risposta
+        next: interventoAggiornato => {
+          this.interventi.update(elenco =>
+            elenco.map(intervento =>
+              intervento.id === id
+                ? interventoAggiornato
+                : intervento
+            )
+          );
+        },
+        error: errore => {
+          console.error(
+            'Errore durante l’avvio:',
+            errore
+          );
+
+          this.erroreOperazione.set(
+            'Impossibile avviare l’intervento.'
+          );
+        }
+      });
+  }
+
   aggiungi(cliente: string, descrizione: string, tecnico: string) {
     const nuovoIntervento: Omit<Intervento, 'id'> = {
       cliente,
@@ -128,7 +159,11 @@ export class InterventiService {
 2. il servizio lo aggiunge al signal;
 3. Angular aggiorna l’elenco
 finalize viene eseguito quando la richiesta termina, sia in caso di successo che di errore. In questo caso, finalize serve a disattivare il segnale salvataggio, che indica al componente padre che la richiesta è terminata.
-  */
+
+App deve reagire al successo?
+Sì  → servizio restituisce Observable, App fa subscribe
+No  → il servizio può fare subscribe internamente
+*/
 
   aggiorna(id: string, cliente: string, descrizione: string, tecnico: string) {
     const url = `${this.apiUrl}/${id}`;

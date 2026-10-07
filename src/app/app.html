@@ -9,7 +9,7 @@
   [errore]="errore"
   [salvataggio]="salvataggio()"
   (salva)="salvaIntervento()"
-  (annulla)="annullaModifica()"
+  (annulla)="resetModulo()"
 />
 <!-- []= padre->figlio, ()= figlio->padre [()]=entrambi -->
 <app-intervento-filtro-stato
@@ -38,6 +38,7 @@
       (completa)="completaIntervento($event)"
       (modifica)="modificaIntervento($event)"
       (elimina)="eliminaIntervento($event)"
+      (avvia)="avviaIntervento($event)"
       />
       @if (intervento.stato === 'Completato') {
       <p>✅ Intervento completato.</p>

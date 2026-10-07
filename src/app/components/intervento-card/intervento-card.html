@@ -3,21 +3,28 @@
 <p>Stato: <strong>{{ intervento().stato }}</strong></p>
 <p>Tecnico: {{ intervento().tecnico }}</p>
 
-<button
-  type="button"
-  (click)="completa.emit(intervento().id)"
-  [disabled]="intervento().stato === 'Completato'"
->
-  Completa intervento
+@if (intervento().stato === 'Da svolgere') {
+  <button
+    type="button"
+    (click)="avvia.emit(intervento().id)"
+  >
+    Avvia intervento
+  </button>
+}
+
+@if (intervento().stato === 'In corso') {
+  <button
+    type="button"
+    (click)="completa.emit(intervento().id)"
+  >
+    Completa intervento
+  </button>
+}
+
+<button type="button" (click)="elimina.emit(intervento().id)">
+    Elimina intervento
 </button>
 
-<button
-    type="button"
-    (click)="elimina.emit(intervento().id)"
-  >
-    Elimina intervento
-  </button>
-
-  <button type="button" (click)="modifica.emit(intervento().id)">
+<button type="button" (click)="modifica.emit(intervento().id)">
   Modifica
-  </button>
+</button>
